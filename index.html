@@ -1,48 +1,89 @@
+<!DOCTYPE html>
 <html>
-<head>
-    <title>Text Analyzer</title>
-    <script src="https://registry.npmmirror.com/vue/3.3.11/files/dist/vue.global.js"></script>
+  <head>
+    <title>Simple Text Analyzer</title>
+    <!-- Import Vue from CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <!-- Import basic Tailwind CSS for styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-        }
+      /* Simple CSS for consistent spacing */
+      .button {
+        margin: 5px;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
     </style>
-</head>
-<body class="bg-gray-100 text-gray-800">
-    <div id="app" class="container mx-auto p-4">
-        <h1 class="text-3xl font-bold mb-4">Text Analyzer</h1>
-        <textarea v-model="text" class="w-full p-2 border border-gray-300 rounded mb-4" rows="10" placeholder="Enter your text here..."></textarea>
-        
+  </head>
+  <body class="bg-gray-100 p-4">
+    <div id="app">
+      <!-- Main container -->
+      <div class="max-w-3xl mx-auto bg-white p-6 rounded shadow">
+        <!-- Title -->
+        <h1 class="text-2xl font-bold mb-4">Text Analyzer</h1>
+
+        <!-- Text input area -->
+        <textarea
+          v-model="text"
+          class="w-full p-2 border rounded mb-4"
+          rows="8"
+          placeholder="Type or paste your text here..."
+        ></textarea>
+
+        <!-- Main action buttons -->
         <div class="mb-4">
-            <button @click="analyzeText" class="bg-blue-500 text-white px-4 py-2 rounded mr-2">Analyze</button>
-            <button @click="cleanText" class="bg-red-500 text-white px-4 py-2 rounded">Reset</button>
+          <button @click="analyzeText" class="button bg-blue-500 text-white">
+            Analyze Text
+          </button>
+          <button @click="cleanText" class="button bg-red-500 text-white">
+            Clear Text
+          </button>
         </div>
-        
+
+        <!-- Text statistics -->
+        <div class="mb-4 p-4 bg-gray-100 rounded">
+          <h2 class="font-bold mb-2">Text Statistics:</h2>
+          <p>Words: {{ wordCount }}</p>
+          <p>Characters: {{ charCount }}</p>
+          <p>Sentences: {{ sentenceCount }}</p>
+        </div>
+
+        <!-- Text cleaning options -->
         <div class="mb-4">
-            <h2 class="text-2xl font-bold mb-2">Text Information</h2>
-            <p><strong>Words:</strong> {{ wordCount }}</p>
-            <p><strong>Characters:</strong> {{ charCount }}</p>
-            <p><strong>Sentences:</strong> {{ sentenceCount }}</p>
+          <h2 class="font-bold mb-2">Text Cleaning Options:</h2>
+          <button @click="removeExtraSpaces" class="button bg-gray-200">
+            Remove Extra Spaces
+          </button>
+          <button @click="lowercaseText" class="button bg-gray-200">
+            Lowercase Text
+          </button>
+          <button @click="removePunctuation" class="button bg-gray-200">
+            Remove Punctuation
+          </button>
+          <button @click="findAndReplace" class="button bg-gray-200">
+            Find and Replace
+          </button>
+          <button @click="removeLineBreaks" class="button bg-gray-200">
+            Remove Line Breaks
+          </button>
+          <button @click="removeHtml" class="button bg-gray-200">
+            Remove HTML
+          </button>
+          <button @click="removeNumbers" class="button bg-gray-200">
+            Remove Numbers
+          </button>
+          <button @click="removeStopwords" class="button bg-gray-200">
+            Remove Stop Words
+          </button>
+          <button @click="removeWeirdCharacters" class="button bg-gray-200">
+            Remove Weird (non-ASCII) Characters
+          </button>
         </div>
-        
-        <div class="mb-4">
-            <h2 class="text-2xl font-bold mb-2">Clean Options</h2>
-            <div class="flex flex-wrap gap-2">
-                <button @click="removeExtraSpaces" class="bg-gray-200 px-4 py-2 rounded">Remove Extra Spaces</button>
-                <button @click="lowercaseText" class="bg-gray-200 px-4 py-2 rounded">Lowercase Text</button>
-                <button @click="removePunctuation" class="bg-gray-200 px-4 py-2 rounded">Remove Punctuation</button>
-                <button @click="removeStopwords" class="bg-gray-200 px-4 py-2 rounded">Remove Stopwords</button>
-                <button @click="findAndReplace" class="bg-gray-200 px-4 py-2 rounded">Find and Replace</button>
-                <button @click="removeLineBreaks" class="bg-gray-200 px-4 py-2 rounded">Remove Line Breaks</button>
-                <button @click="removeHtml" class="bg-gray-200 px-4 py-2 rounded">Remove HTML</button>
-                <button @click="removeNumbers" class="bg-gray-200 px-4 py-2 rounded">Remove Numbers</button>
-                <button @click="removeUrlsEmails" class="bg-gray-200 px-4 py-2 rounded">Remove URLs and Emails</button>
-            </div>
-        </div>
+      </div>
     </div>
-    <script src='script.js'></script>
-</body>
+
+    <!-- Link to your JavaScript file -->
+    <script src="script.js"></script>
+  </body>
 </html>
