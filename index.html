@@ -3,6 +3,12 @@
     <title>Elegant Text Analyzer</title>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/wordcloud2.js/1.2.2/wordcloud2.min.js"
+      integrity="sha512-lGnVsh3WK0YJ7NX7rQmUu6kqF7vqELuDrUTnxpI2iD86VwI+OlQhi3EAJJZbrBUOfDFOAYAkigxkApHGM2IZTg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
@@ -39,7 +45,7 @@
         <h1
           class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-center text-gray-800 mb-6 sm:mb-8"
         >
-          ✨ Text Analyzer ✨
+          🧹 Text Cleaner & Analyzer 🧹
         </h1>
 
         <!-- Text Input Area -->
@@ -57,16 +63,16 @@
           class="flex flex-col sm:flex-row justify-center gap-4 mb-6 sm:mb-8"
         >
           <button
-            @click="analyzeText"
-            class="button bg-blue-600 text-white shadow-lg hover:bg-blue-700 w-full sm:w-auto"
-          >
-            <i class="fas fa-chart-bar mr-2"></i> Analyze Text
-          </button>
-          <button
             @click="cleanText"
             class="button bg-red-500 text-white shadow-lg hover:bg-red-600 w-full sm:w-auto"
           >
             <i class="fas fa-trash-alt mr-2"></i> Clear Text
+          </button>
+          <button
+            @click="generateWordCloud"
+            class="button bg-green-500 text-white shadow-lg hover:bg-green-600 w-full sm:w-auto"
+          >
+            <i class="fas fa-cloud mr-2"></i> Generate Word Cloud
           </button>
         </div>
 
@@ -91,6 +97,19 @@
               <strong>Avg Sentence Length:</strong> {{ averageSentenceLength }}
             </p>
           </div>
+        </div>
+
+        <!-- Word Cloud Display -->
+        <div v-if="showWordCloud" class="mb-6 sm:mb-8 text-xl">
+          <h2
+            class="text-xl sm:text-2xl font-semibold text-blue-800 mb-4 text-center"
+          >
+            Word Cloud
+          </h2>
+          <div
+            id="wordCloud"
+            class="w-full h-64 bg-white rounded-lg shadow-inner"
+          ></div>
         </div>
 
         <!-- Text Cleaning Options -->
