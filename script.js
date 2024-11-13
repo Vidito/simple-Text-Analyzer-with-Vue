@@ -10,29 +10,44 @@ createApp({
     const wordCount = ref(0); // Stores word count
     const charCount = ref(0); // Stores character count
     const sentenceCount = ref(0); // Stores sentence count
+    const averageWordLength = ref(0); // Stores average word length
+    const averageSentenceLength = ref(0); // Stores average sentence length
+    const uniqueWordPercentage = ref(0); // Stores percentage of unique words
 
-    // Function to count words, characters, and sentences
+    // Function to analyze text
     const analyzeText = () => {
-      // Count words by:
-      // 1. Split text by spaces using split(/\s+/)
-      // 2. Filter out empty strings
-      // 3. Count remaining words using length
-      wordCount.value = text.value
-        .trim()
-        .split(/\s+/)
-        .filter((word) => word.length > 0).length;
+      // Get the text value and trim it to remove leading and trailing spaces
+      const textValue = text.value.trim();
+
+      // Split the text into words
+      const words = textValue.split(/\s+/).filter((word) => word.length > 0);
+      wordCount.value = words.length;
 
       // Count all characters (including spaces)
-      charCount.value = text.value.length;
+      charCount.value = textValue.length;
 
-      // Count sentences by:
-      // 1. Split text by period, exclamation mark, or question mark
-      // 2. Filter out empty strings
-      // 3. Count remaining sentences using length
-      sentenceCount.value = text.value
-        .trim()
+      // Split the text into sentences
+      const sentences = textValue
         .split(/[.!?]/)
-        .filter((sentence) => sentence.length > 0).length;
+        .filter((sentence) => sentence.length > 0);
+      sentenceCount.value = sentences.length;
+
+      // Calculate average word length
+      const totalWordLength = words.reduce((sum, word) => sum + word.length, 0);
+      averageWordLength.value = wordCount.value
+        ? (totalWordLength / wordCount.value).toFixed(2)
+        : 0;
+
+      // Calculate average sentence length (in words)
+      averageSentenceLength.value = sentenceCount.value
+        ? (wordCount.value / sentenceCount.value).toFixed(2)
+        : 0;
+
+      // Calculate the percentage of unique words
+      const uniqueWords = new Set(words);
+      uniqueWordPercentage.value = wordCount.value
+        ? ((uniqueWords.size / wordCount.value) * 100).toFixed(2)
+        : 0;
     };
 
     // Function to clear all text and reset counts
@@ -250,6 +265,9 @@ createApp({
     return {
       text,
       wordCount,
+      averageWordLength,
+      averageSentenceLength,
+      uniqueWordPercentage,
       charCount,
       sentenceCount,
       analyzeText,
